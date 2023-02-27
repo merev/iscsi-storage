@@ -10,8 +10,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |v|
     v.gui = false
-    v.memory = 1024
-    v.cpus = 1
+    v.memory = 2024
+    v.cpus = 2
   end
   
   # CentOS Stream 8
