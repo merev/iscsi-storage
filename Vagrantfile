@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
     vm3.vm.network "private_network", ip: "192.168.100.101"
     vm3.vm.synced_folder "shared/", "/shared"
     vm3.vm.provision "shell", path: "initial-config/debian/add_hosts.sh"
-    vm3.vm.provision "shell", path: "initial-config/debian/nfs-server-setup.sh"
+    vm3.vm.provision "shell", path: "initial-config/debian/target-setup.sh"
   end
   
   # Debian 11
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
     vm4.vm.network "private_network", ip: "192.168.100.102"
     vm4.vm.synced_folder "shared/", "/shared"
     vm4.vm.provision "shell", path: "initial-config/debian/add_hosts.sh"
-    vm4.vm.provision "shell", path: "initial-config/debian/nfs-client-setup.sh"
+    vm4.vm.provision "shell", path: "initial-config/debian/initiator-setup.sh"
   end
 
 end

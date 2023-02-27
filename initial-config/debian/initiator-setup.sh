@@ -1,22 +1,23 @@
 #!/bin/bash
 
 echo "* Install the initiator package ..."
-dnf install -y iscsi-initiator-utils
+apt-get update -y && apt-get install -y open-iscsi parted
 
 echo "* Set the initiator name ..."
-echo "InitiatorName=iqn.2023-02.lab.demo:vm2.init1" | tee /etc/iscsi/initiatorname.iscsi
+echo "InitiatorName=iqn.2023-02.lab.demo:vm4.init1" | tee /etc/iscsi/initiatorname.iscsi
 
 echo "* Enable authentication with username and password ..."
+sed -i '45s/manual/automatic/' /etc/iscsi/iscsid.conf
 sed -i '58s/#//' /etc/iscsi/iscsid.conf
 sed -i '69,70s/#//' /etc/iscsi/iscsid.conf
 sed -i '69s/= username/= vagrant/' /etc/iscsi/iscsid.conf
 sed -i '70s/= password/= mypassword/' /etc/iscsi/iscsid.conf
 
 echo "* Restart the service ..."
-systemctl restart iscsi
+systemctl restart iscsid.service
 
 echo "* Initiate a target discovery ..."
-iscsiadm -m discovery -t sendtargets -p vm1
+iscsiadm -m discovery -t sendtargets -p vm3
 
 echo "* Login to the target ..."
 iscsiadm -m node --login
